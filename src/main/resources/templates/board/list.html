@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
     <title>Campus Board</title>
     <form action="/board/search" method="GET" id="search-form-header" class="search-form js__toggle active pull-right">
@@ -40,6 +40,7 @@
 
         <div class="btn_wrap text-right">
             <a th:href="@{/post}" class="btn btn-primary waves-effect waves-light">Write</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
         </div>
         <div>
         <span th:each="pageNum : ${pageList}" th:inline="text">

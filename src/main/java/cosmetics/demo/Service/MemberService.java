@@ -22,6 +22,7 @@ public class MemberService implements UserDetailsService {
 
     //==Spring Security==//
     public Long join(MemberDto memberDto){
+        validateDuplicateMember(memberDto);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         memberDto.setPassword(encoder.encode(memberDto.getPassword()));
 
@@ -37,15 +38,15 @@ public class MemberService implements UserDetailsService {
 //        return memberDto.getId();
 //    }
 //
-//    //==중복 방지==//
-//    private void validateDuplicateMember(MemberDto memberDto) {
-//        List<MemberEntity> members = memberRepository.findAll();
-//        for(int i=0;i<members.size(); ++i){
-//            if(members.get(i).getEmail().equals(memberDto.getEmail())){
-//                throw new IllegalStateException("이미 존재하는 회원입니다.");
-//            }
-//        }
-//    }
+    //==중복 방지==//
+    private void validateDuplicateMember(MemberDto memberDto) {
+        List<MemberEntity> members = memberRepository.findAll();
+        for(int i=0;i<members.size(); ++i){
+            if(members.get(i).getEmail().equals(memberDto.getEmail())){
+                throw new IllegalStateException("이미 존재하는 회원입니다.");
+            }
+        }
+    }
 
 //    public int login(MemberDto memberDto){
 //        MemberEntity byEmail = memberRepository.findByEmail(memberDto.getEmail());
