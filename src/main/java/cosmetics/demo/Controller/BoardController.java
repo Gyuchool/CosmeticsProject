@@ -3,6 +3,7 @@ package cosmetics.demo.Controller;
 import cosmetics.demo.Service.BoardService;
 import cosmetics.demo.dto.BoardDto;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,16 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Controller
-@AllArgsConstructor
 public class BoardController {
-    @Autowired
-    private BoardService boardService;
-
-    @GetMapping("/")
-    public String home(){
-        return "home";
-    }
+    private final BoardService boardService;
 
     /* 게시글 목록 */
     @GetMapping("/list")
@@ -31,7 +26,7 @@ public class BoardController {
 
         model.addAttribute("boardList", boardList);
 
-        return "board/list.html";
+        return "board/list";
     }
 
 
