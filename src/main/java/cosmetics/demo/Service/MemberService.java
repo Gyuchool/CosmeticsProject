@@ -2,6 +2,7 @@ package cosmetics.demo.Service;
 
 import cosmetics.demo.Domain.Entity.MemberEntity;
 import cosmetics.demo.Domain.Repository.MemberRepository;
+import cosmetics.demo.Domain.Repository.RememberTokenRepository;
 import cosmetics.demo.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

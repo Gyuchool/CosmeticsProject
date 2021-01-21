@@ -11,6 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -18,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final MemberService memberService;
+    private final DataSource dataSource;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -30,6 +36,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception{
 
+        http.rememberMe()
+                .key("secrete")
+                .userDetailsService(memberService)
+                .tokenValiditySeconds(60*60*24*7)   //default 토큰 유지 기간 : 2주
+                .tokenRepository(tokenRepository());
         http.authorizeRequests()
                 .antMatchers("/","/members/login","/members/new").permitAll()  //누구나 접근 가능
                 .antMatchers("/list","/post", "/post/{no}", "board/search","/post/edit/{no}").hasRole("USER")           //USER, ADMIN 접근 가능
@@ -46,7 +57,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    @Bean
+    PersistentTokenRepository tokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
+    }
+
+
     public void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
     }
+
+
 }

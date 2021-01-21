@@ -5,6 +5,9 @@ import cosmetics.demo.Domain.Repository.MemberRepository;
 import cosmetics.demo.Service.MemberService;
 import cosmetics.demo.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.authentication.jaas.SecurityContextLoginModule;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -12,9 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Member;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -24,8 +29,10 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/")
-    public String home(){
-
+    public String home(Principal principal) {
+        if(principal != null) {
+            return "redirect:/list";
+        }
         return "home.html";
     }
     /**
@@ -52,7 +59,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/login")
-    public String MemberLogin(MemberDto memberDto){
+    public String MemberLogin(HttpServletResponse response, HttpServletRequest request){
         return "redirect:/list";
     }
 
