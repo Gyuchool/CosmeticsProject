@@ -1,19 +1,10 @@
 package cosmetics.demo.Service;
 
-import cosmetics.demo.Domain.Entity.MemberEntity;
-import cosmetics.demo.Domain.Repository.MemberRepository;
-import cosmetics.demo.dto.MemberDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import javax.swing.*;
-
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
