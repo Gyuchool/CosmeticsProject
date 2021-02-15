@@ -110,5 +110,13 @@ public class BoardController {
                             @PathVariable("LikesId") Long LikesId){
         boardService.cancleLikes(memberId, boardId, LikesId);
     }
+
+
+    @GetMapping("board/list/hot")
+    public ResponseList hotBoardList(Pageable pageable){
+        Page<BoardDto> boardDtos = boardService.listHotBoard(pageable);
+        return new ResponseList(boardDtos.getTotalElements(), boardDtos);
+    }
+
 }
 

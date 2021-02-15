@@ -15,4 +15,5 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
     Page<BoardEntity> findBoardEntitiesByCategory(Category category, Pageable pageable);
     List<BoardEntity> findByMemberEntityId(Long memberId);
     Page<BoardEntity> findBoardEntitiesByCategoryAndTitleContaining(String keyword, Category category, Pageable pageable);
+    Page<BoardEntity> findBoardEntitiesByHot(Pageable pageable);
 }

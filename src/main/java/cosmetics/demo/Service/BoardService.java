@@ -46,6 +46,9 @@ public class BoardService {
         likesRepository.findByMemberEntityAndBoardEntity(memberEntity, boardEntity).ifPresent(none ->{throw new RuntimeException();});
         int count = likesRepository.countByBoardEntity(boardEntity);
         boardEntity.updateLikes(count + 1);
+        if(boardEntity.getLike()>=10){
+            boardEntity.addHotboard();
+        }
         likesRepository.save(LikesFunction.builder()
                 .boardEntity(boardEntity)
                 .memberEntity(memberEntity)
@@ -70,6 +73,11 @@ public class BoardService {
         return new BoardDto(boardEntity);
     }
 
+    public Page<BoardDto> listHotBoard(Pageable pageable){
+        Page<BoardEntity> boardEntities = boardRepository.findBoardEntitiesByHot(pageable);
+        return boardEntities.map(BoardDto::new);
+
+    }
     @Transactional
     public Long savePost(Long memberId, Category category, BoardDto boardDto) {
         MemberEntity findMember = memberRepository.findOne(memberId);

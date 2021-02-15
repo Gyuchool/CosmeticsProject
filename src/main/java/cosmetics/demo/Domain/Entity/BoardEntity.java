@@ -58,9 +58,6 @@ public class BoardEntity extends TimeEntity{
         member.getBoards().add(this);
     }
 
-    public void setCategory(Category category){
-        this.category= category;
-    }
 
     public void updateBoard(BoardDto boardDto){
 
@@ -73,7 +70,12 @@ public class BoardEntity extends TimeEntity{
 
     }
     public void updateLikes(int like){this.like = like;}
-
+    public void setCategory(Category category){
+        this.category= category;
+    }
+    public void addHotboard(){
+        this.hot =true;
+    }
     public void updateView(int viewcnt){
         this.viewcnt = viewcnt;
     }
