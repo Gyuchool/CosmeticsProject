@@ -59,20 +59,12 @@ public class BoardEntity extends TimeEntity{
     }
 
 
-    public void updateBoard(BoardDto boardDto){
-
-        this.title = boardDto.getTitle();
-        this.content = boardDto.getContent();
-        this.hot = boardDto.isHot();
-        this.viewcnt = boardDto.getViewcnt();
-        this.memberEntity = boardDto.toEntity().getMemberEntity();
-        this.updateTime(boardDto.getCreatedDate(), boardDto.getModifiedDate());
-
+    public void modifyBoard(String title, String content){
+        this.title = title;
+        this.content = content;
     }
+
     public void updateLikes(int like){this.like = like;}
-    public void setCategory(Category category){
-        this.category= category;
-    }
     public void addHotboard(){
         this.hot =true;
     }

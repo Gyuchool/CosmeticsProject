@@ -3,6 +3,7 @@ package cosmetics.demo.Controller;
 import cosmetics.demo.Domain.Entity.Category;
 import cosmetics.demo.Service.BoardService;
 import cosmetics.demo.dto.BoardDto;
+import cosmetics.demo.dto.BoardRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -55,20 +57,13 @@ public class BoardController {
         return boardDto;
     }
 
-    @Data
-    @AllArgsConstructor
-    static class BoardRequest{
-        private String title;
-        private String content;
-    }
-
 
     /* 게시글 수정 */
     @PutMapping("/board/post/edit/{no}")
     public BoardDto boardUpdate(@PathVariable("no") Long boardId,
                                 @RequestParam("memberId")Long memberId,
-                                @RequestBody @Valid BoardDto boardDTO) {
-        BoardDto boardDto = boardService.updatePost(boardId, memberId, boardDTO);
+                                @RequestBody @Valid BoardRequest boardRequest){
+        BoardDto boardDto = boardService.updatePost(boardId, memberId, boardRequest);
         return boardDto;
     }
 

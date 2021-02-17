@@ -6,6 +6,7 @@ import cosmetics.demo.dto.BoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
     Page<BoardEntity> findBoardEntitiesByCategory(Category category, Pageable pageable);
     List<BoardEntity> findByMemberEntityId(Long memberId);
     Page<BoardEntity> findBoardEntitiesByCategoryAndTitleContaining(String keyword, Category category, Pageable pageable);
-    Page<BoardEntity> findBoardEntitiesByHot(Pageable pageable);
+
+    @Query("select b from BoardEntity b where b.hot = true")
+    Page<BoardEntity> findAllByHot(Pageable pageable);
 }

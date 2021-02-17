@@ -8,7 +8,9 @@ import cosmetics.demo.Domain.Repository.BoardRepository;
 import cosmetics.demo.Domain.Repository.LikesRepository;
 import cosmetics.demo.Domain.Repository.MemberRepository;
 import cosmetics.demo.dto.BoardDto;
+import cosmetics.demo.dto.BoardRequest;
 import cosmetics.demo.dto.MemberDto;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -74,7 +76,8 @@ public class BoardService {
     }
 
     public Page<BoardDto> listHotBoard(Pageable pageable){
-        Page<BoardEntity> boardEntities = boardRepository.findBoardEntitiesByHot(pageable);
+        Page<BoardEntity> boardEntities = boardRepository.findAllByHot(pageable);
+
         return boardEntities.map(BoardDto::new);
 
     }
@@ -86,10 +89,10 @@ public class BoardService {
                 .id(boardDto.getId())
                 .title(boardDto.getTitle())
                 .content(boardDto.getContent())
+                .category(category)
                 .viewcnt(boardDto.getViewcnt())
                 .build();
 
-        board.setCategory(category);
         board.setMember(findMember);
 
         return boardRepository.save(board).getId();
@@ -123,14 +126,15 @@ public class BoardService {
 
     //==게시글 업뎃==//
     @Transactional
-    public BoardDto updatePost(Long id, Long memberId, BoardDto board){
+    public BoardDto updatePost(Long id, Long memberId, BoardRequest board){
         MemberEntity findMember = memberRepository.findOne(memberId);
         BoardEntity boardEntity = boardRepository.findById(id).get();
+
 
         List<BoardEntity> boards = findMember.getBoards();
 
         if(boards.contains(boardEntity)){
-            boardEntity.updateBoard(board);
+            boardEntity.modifyBoard(board.getTitle(), board.getContent());
         }
 
         return new BoardDto(boardEntity);
@@ -144,4 +148,5 @@ public class BoardService {
 
         return collect;
     }
+
 }
