@@ -50,7 +50,7 @@ public class CommentEntity extends TimeEntity {
     public static CommentEntity createComment(BoardEntity board, MemberEntity member, CommentDto commentDto){
 
         CommentEntity comment = commentDto.toEntity();
-
+        comment.updateTime(LocalDateTime.now(), LocalDateTime.now());
         comment.setMember(member);
         comment.setBoard(board);
 

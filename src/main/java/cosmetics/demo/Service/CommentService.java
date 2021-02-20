@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -76,6 +77,7 @@ public class CommentService {
                 .modifiedDate(commentDto.getModifiedDate())
                 .build();
 
+        commentEntity.updateTime(LocalDateTime.now(), LocalDateTime.now());
         return new CommentDto(commentEntity);
     }
 
