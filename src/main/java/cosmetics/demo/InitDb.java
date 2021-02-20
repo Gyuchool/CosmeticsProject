@@ -50,7 +50,7 @@ public class InitDb {
             BoardDto boardDto = new BoardDto();
             boardDto.setContent("인잇디비");
             boardDto.setHot(false);
-
+            boardDto.setCategory(Category.DRY);
             boardDto.setViewcnt(1);
             boardDto.setCreatedDate(LocalDateTime.now());
             boardDto.setTitle("제목은?");
@@ -58,7 +58,7 @@ public class InitDb {
             BoardEntity boardEntity = boardDto.toEntity();
 
             boardEntity.setMember(member1);
-            boardEntity.setCategory(Category.DRY);
+
             boardRepository.save(boardEntity);
 
             LikesFunction like = LikesFunction.builder()
@@ -86,9 +86,10 @@ public class InitDb {
             boardDto2.setCreatedDate(LocalDateTime.now());
             boardDto2.setTitle("제목짓기2");
             boardDto2.setMemberDto(new MemberDto(member2));
+            boardDto2.setCategory(Category.OILY);
 
             BoardEntity boardEntity2 = boardDto2.toEntity();
-            boardEntity2.setCategory(Category.OILY);
+
 
             boardEntity2.setMember(member2);
             boardRepository.save(boardEntity2);
@@ -117,9 +118,9 @@ public class InitDb {
             boardDto2.setCreatedDate(LocalDateTime.now());
             boardDto2.setTitle("제목짓기2");
             boardDto2.setMemberDto(new MemberDto(member2));
+            boardDto2.setCategory(Category.OILY);
 
             BoardEntity boardEntity2 = boardDto2.toEntity();
-            boardEntity2.setCategory(Category.OILY);
 
             boardEntity2.setMember(member2);
             boardRepository.save(boardEntity2);

@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -93,6 +94,7 @@ public class BoardService {
                 .viewcnt(boardDto.getViewcnt())
                 .build();
 
+        board.updateTime(boardDto.getCreatedDate(), boardDto.getModifiedDate());
         board.setMember(findMember);
 
         return boardRepository.save(board).getId();
@@ -129,7 +131,7 @@ public class BoardService {
     public BoardDto updatePost(Long id, Long memberId, BoardRequest board){
         MemberEntity findMember = memberRepository.findOne(memberId);
         BoardEntity boardEntity = boardRepository.findById(id).get();
-
+        boardEntity.updateTime(LocalDateTime.now(), LocalDateTime.now());
 
         List<BoardEntity> boards = findMember.getBoards();
 
