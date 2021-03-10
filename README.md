@@ -1,2 +1,3 @@
 # CosmeticsProject
-Cosmetics Allergic Ingredients Project
+Cosmetics Allergic Ingredients Project\
+SpringBoot + Jpa + gradle + mySql
